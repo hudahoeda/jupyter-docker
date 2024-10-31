@@ -1,13 +1,11 @@
-# Base image with Jupyter Notebook
-FROM jupyter/base-notebook:latest
+# Start from a Jupyter image with JupyterLab pre-installed
+FROM jupyter/minimal-notebook:latest
 
-# Install jupyter-scheduler and any other necessary packages
+# Install jupyter-scheduler and its dependencies
 RUN pip install jupyter-scheduler
 
-# Configure Jupyter Scheduler extension
-RUN jupyter nbextension install jupyter_scheduler --py --sys-prefix
-RUN jupyter nbextension enable jupyter_scheduler --py --sys-prefix
-RUN jupyter serverextension enable jupyter_scheduler --sys-prefix || true  # Ignore errors if unsupported
+# Enable Jupyter Scheduler as a labextension
+RUN jupyter labextension install jupyter_scheduler --no-build || true
 
 # Configure Jupyter to use a token or password based on environment variables
 ENV JUPYTER_TOKEN=""
