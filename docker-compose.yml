@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  jupyter:
+    build: .
+    ports:
+      - "8888:8888"  # Expose Jupyter on port 8888
+    environment:
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN}  # Referencing the token from .env file
+      - JUPYTER_PASSWORD=${JUPYTER_PASSWORD}  # Referencing the password from .env file
+    volumes:
+      - ./notebooks:/home/jovyan/work  # Mount the notebooks directory
+    restart: unless-stopped
